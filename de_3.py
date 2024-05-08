@@ -25,5 +25,30 @@ cv.imshow("Ib", Ib)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 cv.waitKey(0)
 cv.destroyAllWindows()

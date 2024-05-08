@@ -2,7 +2,7 @@ import cv2 as cv
 import numpy as np
 
 #  đọc vào một ảnh màu
-origin_image = cv.imread(r"D:\Image_processing\test_contour.png")
+origin_image = cv.imread(r"D:\Image_processing\Ice_bear.jpg")
 cv.imshow('ex1', origin_image)
 # cv.waitKey(0)
 
@@ -41,15 +41,22 @@ cv.imshow('Ib image', Ib)
 contours, hierarchy = cv.findContours(img_canny, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_NONE)
 cv.imshow('Canny Edges After Contouring', img_canny)
 print("Number of Contours found = " + str(len(contours)))
-# Draw all contours
-# -1 signifies drawing all contours
-cv.drawContours(origin_image, contours, -1, (0, 255, 0), 3)
+
+# len_contour = len(contours)
+# for i in range(len_contour):
+#     print("Do lon la: ", contours[i].shape)
+
+# area = [cv.contourArea(c) for c in contours]
+max_area_matrix = max(contours, key=cv.contourArea)
+max_area = cv.contourArea(max_area_matrix)
+result_contour = [contour for contour in contours if cv.contourArea(contour) > (max_area / 5)]
+print("max area", max_area)
+
+cv.drawContours(origin_image, result_contour, -1, (0, 255, 255), 4)
+cv.imshow("Contour", origin_image)
+
+cv.drawContours(origin_image, contours, -1,(0, 255, 0),3)
 cv.imshow('Contours', origin_image)
-cv.waitKey(0)
-cv.destroyAllWindows()
-
-
-
 cv.waitKey(0)
 cv.destroyAllWindows()
 

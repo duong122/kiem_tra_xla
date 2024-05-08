@@ -18,15 +18,6 @@ cv.imshow("Kenh mau s sau khi lam tron la", Is)
 Is_2 = 255 - Is
 _, Ib = cv.threshold(Is_2, 127, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)
 cv.imshow("anh sau khi lay nguong otsu la", Ib)
-print("Ib ",  Ib)
-
-
-cv.waitKey(0)
-cv.destroyAllWindows()
-
-# xac dinh duong contour co dien tich lon nhat cua Ib. Ve duong contour len anh goc I hien
-# thi anh I
-
 
 
 
@@ -37,3 +28,33 @@ plt.show()
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+cv.waitKey(0)
+cv.destroyAllWindows()
