@@ -32,13 +32,5 @@ cv.imshow("kenh mau s sau khi loc median ", new_s)
 
 
 
-
-
-
-
-
-
-
-
 cv.waitKey(0)
 cv.destroyAllWindows()

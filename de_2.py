@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # 1. Doc vao anh mau vao bien ma tran I va hien thi anh vua doc vao
-I = cv.imread(r"D:\Image_processing\Ice_bear.jpg")
+I = cv.imread(r"D:\Image_processing\img_seg1.png")
 img = I
 blue, green, red = cv.split(I)
 
@@ -35,25 +35,46 @@ cv.imshow("Anh sau khi nhi phan hoa theo nguong otsu la", Ib)
 # 6. Xac dinh duong contour co ty le giua chu vi va dien tich lon nhat cua anh Ib. Ve duong contour do
 #    tren anh goc I
 contours, hierarchy = cv.findContours(Ib, cv.RETR_TREE, cv.CHAIN_APPROX_NONE)
-chu_vi = []
-for cnt in contours:
-    tmp = cv.arcLength(cnt, True)
-    chu_vi.append(tmp)
+# print("Contour: ", contours)
+# chu_vi = []
+# for cnt in contours:
+#     tmp = cv.arcLength(cnt, True)
+#     chu_vi.append(tmp)
+#
+# dien_tich = []
+# for contour in contours:
+#     tmp = cv.contourArea(contour)
+#     dien_tich.append(tmp)
+#
+# chu_vi = np.array(chu_vi)
+# dien_tich = np.array(dien_tich)
+# result = chu_vi / dien_tich
+# max_result = result.argmax()
+#
+# cv.drawContours(I, [contours[max_result]], -1, (0, 0, 255), 3)
+# cv.imshow("Anh sau khi tim duoc contour co ty le lon nhat la", I)
+# Khởi tạo tỷ lệ lớn nhất là 0
+max_ratio = 0
+max_contour = None
 
-dien_tich = []
 for contour in contours:
-    tmp = cv.contourArea(contour)
-    dien_tich.append(tmp)
+    # Tính chu vi và diện tích
+    perimeter = cv.arcLength(contour, True)
+    area = cv.contourArea(contour)
 
-chu_vi = np.array(chu_vi)
-dien_tich = np.array(dien_tich)
-result = chu_vi / dien_tich
-max_result = result.argmax()
+    if area > 0:  # Tránh chia cho 0
+        # Tính tỷ lệ giữa chu vi và diện tích
+        ratio = perimeter / area
 
-cv.drawContours(Ib, contours, -1, (0, 255, 255), 3)
-cv.imshow("Anh sau khi tim duoc contour co ty le lon nhat la", Ib)
+        # Cập nhật tỷ lệ lớn nhất và đường contour tương ứng
+        if ratio > max_ratio:
+            max_ratio = ratio
+            max_contour = contour
 
-
+# Vẽ đường contour có tỷ lệ lớn nhất lên ảnh gốc
+if max_contour is not None:
+    cv.drawContours(I, [max_contour], -1, (0, 255, 0), 2)
+cv.imshow('Image with max ratio contour', I)
 cv.waitKey(0)
 cv.destroyAllWindows()
 
