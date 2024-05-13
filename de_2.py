@@ -79,34 +79,12 @@ cv.waitKey(0)
 cv.destroyAllWindows()
 
 # 3. Xac dinh va ve historgam cua kenh S
-def compute_hist(img):
-    hist = np.zeros(256, np.uint8)
-    h, w = I.shape[:2]
-    for i in range(h):
-        for j in range(w):
-            hist[I[i, j]] += 1
-    return hist
-
-def equal_hist(hist):
-    cumulator = np.zeros_like(hist, np.float64)
-    for i in range(1, len(cumulator)):
-        cumulator[i - 1] = hist[:i].sum()
-    print(cumulator)
-    new_hist = ((cumulator - cumulator.min()) / (cumulator.max() - cumulator.min())) * 255
-    new_hist = np.uint8(new_hist)
-    return new_hist
-
-hist = compute_hist(img).ravel()
-new_hist = equal_hist(hist)
-
-h, w = img.shape[:2]
-for i in range(h):
-    for j in range(w):
-        img[i, j] = new_hist[img[i, j]]
-
-fig = plt.figure()
-ax = plt.subplot(121)
-plt.imshow(I, cmap='gray')
-plt.subplot(122)
-plt.imshow(img, cmap='gray')
+hist = cv.calcHist([Ihsv], [1], None, [256], [0, 256])
+# plt.hist(s.ravel(), 256, (0, 256))
+# plt.show()
+plt.plot(hist, color='k')
 plt.show()
+
+
+
+
