@@ -42,11 +42,12 @@ cv.imshow("Anh sau khi duoc ve them contour la: ", I)
 
 # 6. Tăng độ sáng của kênh V của ảnh Ihsv bằng phương phap giãn mức xám. Biến đổi ngược ảnh Ihsv về
 # biểu diễn màu RGB được ảnh I. Hiển thị lại ảnh I.
-hist = cv.calcHist([Ihsv], [0], None, [256], [0, 256])
+hist = cv.calcHist([Ihsv], [2], None, [256], [0, 256])
 v_after = cv.equalizeHist(v)
-print("Hist", v)
-
-
+print("V_after: ", v_after)
+new_hsv_img = cv.merge([h, s, v_after])
+new_rgb_img = cv.cvtColor(new_hsv_img, cv.COLOR_HSV2RGB)
+cv.imshow("anh rgb sau khi chuyen doi tu hsv la: ", new_rgb_img)
 
 
 

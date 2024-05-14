@@ -2,10 +2,11 @@ import cv2 as cv
 import numpy as np
 
 # 1. Doc vao anh mau va hien thi anh mau
-I = cv.imread(r"D:\Image_processing\calc_hist_pic.png", cv.IMREAD_COLOR)
+I = cv.imread(r"D:\Image_processing\ex7.png", cv.IMREAD_COLOR)
 cv.imshow("origin image", I)
 gray_scale = cv.cvtColor(I, cv.COLOR_BGR2GRAY)
 print("gray scale", gray_scale)
+
 # 2. Chuyen anh doc vao thanh anh hsv. Hien thi kenh v cua Ihsv xac dinh gia tri muc sang lon nhat cua kenh V
 Ihsv = cv.cvtColor(I, cv.COLOR_BGR2HSV)
 h, s, v = cv.split(Ihsv)
@@ -42,13 +43,12 @@ cv.imshow("Anh sau khi duoc ve them contour la: ", I)
 
 # 6. Tăng độ sáng của kênh V của ảnh Ihsv bằng phương phap giãn mức xám. Biến đổi ngược ảnh Ihsv về
 # biểu diễn màu RGB được ảnh I. Hiển thị lại ảnh I.
-hist = cv.calcHist([Ihsv], [0], None, [256], [0, 256])
+hist = cv.calcHist([Ihsv], [2], None, [256], [0, 256])
 v_after = cv.equalizeHist(v)
-print("Hist", v)
-
-
-
-
+print("V_after: ", v_after)
+new_hsv_img = cv.merge([h, s, v_after])
+new_rgb_img = cv.cvtColor(new_hsv_img, cv.COLOR_HSV2RGB)
+cv.imshow("anh rgb sau khi chuyen doi tu hsv la: ", new_rgb_img)
 
 cv.waitKey(0)
 cv.destroyAllWindows()
